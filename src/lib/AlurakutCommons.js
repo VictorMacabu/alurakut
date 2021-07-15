@@ -159,8 +159,6 @@ AlurakutMenu.Logo = styled.img`
 width: 63px;
 height: 15px;
 padding: 9px 13px;
-
-
 background: #FFFFFF;
 border-radius: 26px;
 `;
@@ -287,6 +285,7 @@ export function OrkutNostalgicIconSet(props) {
 }
 OrkutNostalgicIconSet.List = styled.ul`
   margin-top: 32px;
+  margin-left: 5px
   list-style: none;
   display: flex;
   justify-content: space-between;
