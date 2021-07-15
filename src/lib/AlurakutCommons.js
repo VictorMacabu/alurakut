@@ -27,7 +27,7 @@ export function AlurakutMenu({ githubUser }) {
         <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
 
         <nav style={{ flex: 1 }}>
-          {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
+          {[{ name: 'Inicio', slug: '/' }, { name: 'Amigos', slug: '/amigos' }, { name: 'Comunidades', slug: '/comunidades' }].map((menuItem) => (
             <Link key={`key__${menuItem.name.toLocaleLowerCase()}`} href={`${menuItem.slug.toLocaleLowerCase()}`}>
               {menuItem.name}
             </Link>
@@ -156,10 +156,13 @@ AlurakutMenu.Wrapper = styled.header`
   }
 `;
 AlurakutMenu.Logo = styled.img`
-  background-color: #ffffff;
-  padding: 9px 14px;
-  border-radius: 1000px;
-  height: 34px;
+width: 63px;
+height: 15px;
+padding: 9px 13px;
+
+
+background: #FFFFFF;
+border-radius: 26px;
 `;
 
 function AlurakutMenuProfileSidebar({ githubUser }) {
@@ -190,31 +193,31 @@ export function AlurakutProfileSidebarMenuDefault() {
       <nav>
         <a href="/">
           <img src={`${BASE_URL}/icons/user.svg`} />
-            Perfil
-          </a>
+          Perfil
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/book.svg`} />
-            Recados
-          </a>
+          Recados
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/camera.svg`} />
-            Fotos
-          </a>
+          Fotos
+        </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/sun.svg`} />
-            Depoimentos
-          </a>
+          Depoimentos
+        </a>
       </nav>
       <hr />
       <nav>
         <a href="/">
           <img src={`${BASE_URL}/icons/plus.svg`} />
-            GitHub Trends
-          </a>
+          GitHub Trends
+        </a>
         <a href="/logout">
           <img src={`${BASE_URL}//icons/logout.svg`} />
-            Sair
-          </a>
+          Sair
+        </a>
       </nav>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
   )
@@ -255,7 +258,7 @@ export function OrkutNostalgicIconSet(props) {
           </span>
           <span className="OrkutNostalgicIconSet__number" style={{ gridArea: 'number' }}>
             <img key={`orkut__icon_set__${slug}_img`} className="OrkutNostalgicIconSet__iconSample" src={`https://alurakut.vercel.app/icons/${icon}.svg`} />
-            {props[slug] ? props[slug] : 0}
+            {props[slug] ? props[slug] : 1}
           </span>
         </li>
       ))}
