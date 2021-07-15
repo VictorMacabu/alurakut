@@ -5,7 +5,6 @@ import NextLink from 'next/link';
 const BASE_URL = 'http://alurakut.vercel.app/';
 const v = '1';
 
-
 function Link({ href, children, ...props }) {
   return (
     <NextLink href={href} passHref>
@@ -162,11 +161,12 @@ border-radius: 1000px;
 height: 34px;
 `;
 
-function AlurakutMenuProfileSidebar({ githubUser }) {
+function AlurakutMenuProfileSidebar({githubUser = 'VictorMacabu'}) {
   return (
-    <div className="alurakutMenuProfileSidebar">
+    <div className="alurakutMenuProfileSidebar" style={{display:'flex', alignItems: 'center',
+    justifyContent: 'flex-start'}}>
       <div>
-        <img src={`https://github.com/${githubUser}.png`} style={{ borderRadius: '8px' }} />
+        <img src={`https://github.com/${githubUser}.png`} style={{ maxWidth: '222px' , borderRadius: '8px' }} />
         <hr />
         <p>
           <a className="boxLink" href={`/user/${githubUser}`}>
