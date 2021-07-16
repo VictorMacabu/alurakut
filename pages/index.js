@@ -5,6 +5,12 @@ import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet 
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 import React from 'react';
 
+function rand(min, max) { // randomiza a img da nova comunidade
+  min = Math.ceil(min);   // min = 0
+  max = Math.floor(max);  // max = 9999
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function ProfileSidebar(propriedades) {
   console.log(propriedades);
   return (
@@ -30,7 +36,8 @@ export default function Home() {
 
     id: 454678465,
     title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
+    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg',//gerador de img http://picsum.photos/300/300?7234324
+    urlDestino:''
     //objeto da comunidade inicial
   }]);
   const pessoasFavoritas = [
@@ -73,7 +80,8 @@ export default function Home() {
                 const comunidade = {
                   id: new Date().toISOString(),
                   title: dadosDoForm.get('title'),
-                  image: dadosDoForm.get('image'),
+                  image: `http://picsum.photos/300/300?${rand(0,9999)}`,
+                  urlDestino: dadosDoForm.get('urlDestino'),
                 }
                 const comunidadesAtualizadas = [...comunidades, comunidade];
                 setComunidades(comunidadesAtualizadas)
@@ -88,9 +96,9 @@ export default function Home() {
                 </div>
                 <div>
                   <input
-                    placeholder="Coloque uma URL para usarmos de capa"
-                    name="image"
-                    aria-label="Coloque uma URL para usarmos de capa"
+                    placeholder="Coloque um URL de destino para a comunidade"
+                    name="urlDestino"
+                    aria-label="Coloque um URL de destino para a comunidade"
                   />
                 </div>
 
@@ -102,7 +110,7 @@ export default function Home() {
         </div>
         {/*fim da area do meio da pagina/ area do bem vindo */}
 
-
+              {/*inicio do terceiro grid/ area amigos e comunidades*/}
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
           <div>
             <ProfileRelationsBoxWrapper>
@@ -134,7 +142,7 @@ export default function Home() {
                 {comunidades.map((itemAtual) => {
                   return (
                     <li key={itemAtual.id}>
-                      <a href={`/users/${itemAtual.title}`} key={itemAtual.id}>
+                      <a href={itemAtual.urlDestino} key={itemAtual.id}>
                         <img src={itemAtual.image} />
                         <span>{itemAtual.title}</span>
                       </a>
