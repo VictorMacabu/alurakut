@@ -52,14 +52,14 @@ export default function Home() {
     })
   },[])
    console.log(seguidores)
-  const pessoasFavoritas = [
+ /* const pessoasFavoritas = [
     'juunegreiros',
     'filipedeschamps',
     'peas',
     'rafaballerini',
     'marcobrunodev',
     'omariosouto'
-  ]
+  ] */
   return (
     <>
       <AlurakutMenu />
@@ -125,12 +125,12 @@ export default function Home() {
               {/*inicio do terceiro grid/ area seguidores e comunidades*/}
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
           <div>
-            <ProfileRelationsBoxWrapper>
+            <ProfileRelationsBoxWrapper >
               <h2 className="smallTitle">
                 Seguidores ({seguidores.length})
               </h2>
 
-              <ul>
+              <ul style={{maxHeight: '100%'}}>
                 {seguidores.map((itemAtual) => {
                   return (
                     <li key={itemAtual.id}>
