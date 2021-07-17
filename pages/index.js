@@ -40,6 +40,18 @@ export default function Home() {
     urlDestino:''
     //objeto da comunidade inicial
   }]);
+
+  const [seguidores, setSeguidores] = React.useState([]);
+  React.useEffect(()=>{
+    fetch(`https://api.github.com/users/${usuarioAleatorio}/followers`)
+    .then((respostaServidor) =>{      /*chamando a API do github*/
+      return respostaServidor.json(); /*github retorna uma promise*/
+    })                                /*espera a resposta dessa promise*/
+    .then((respostaCompleta) => {     /*transforma a resposta num json*/
+      setSeguidores(respostaCompleta);/*espera o resultado da nova promise do json */
+    })
+  },[])
+   console.log(seguidores)
   const pessoasFavoritas = [
     'juunegreiros',
     'filipedeschamps',
@@ -110,29 +122,30 @@ export default function Home() {
         </div>
         {/*fim da area do meio da pagina/ area do bem vindo */}
 
-              {/*inicio do terceiro grid/ area amigos e comunidades*/}
+              {/*inicio do terceiro grid/ area seguidores e comunidades*/}
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
           <div>
             <ProfileRelationsBoxWrapper>
               <h2 className="smallTitle">
-                Pessoas da comunidade ({pessoasFavoritas.length})
+                Seguidores ({seguidores.length})
               </h2>
 
               <ul>
-                {pessoasFavoritas.map((itemAtual) => {
+                {seguidores.map((itemAtual) => {
                   return (
-                    <li key={itemAtual}>
-                      <a href={`/users/${itemAtual}`} >
-                        <img src={`https://github.com/${itemAtual}.png`} />
-                        <span>{itemAtual}</span>
+                    <li key={itemAtual.id}>
+                      <a href={`https://github.com/${itemAtual.login}`} >
+                        <img src={`https://github.com/${itemAtual.login}.png`} />
+                        <span>{itemAtual.login}</span>
                       </a>
                     </li>
                   )
                 })}
               </ul>
             </ProfileRelationsBoxWrapper>
-          </div>
-          <div>
+          </div>{/*fim da area dos seguidores*/}
+
+          <div>{/* area destinada a receber novas comunidades */}
             <ProfileRelationsBoxWrapper>
               <h2 className="smallTitle">
                 Minhas comunidades ({comunidades.length})
@@ -151,8 +164,9 @@ export default function Home() {
                 })}
               </ul>
             </ProfileRelationsBoxWrapper>
-          </div>
-        </div>
+          </div>{/*fim da area das comunidades*/}
+
+        </div>{/*fim do terceiro grid/ area seguidores e comunidades*/}
       </MainGrid>
     </>
   )
