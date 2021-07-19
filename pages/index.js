@@ -175,7 +175,7 @@ export default function Home() {
               </h2>
 
               <ul style={{ maxHeight: '100%' }}>
-                {seguidores.map((itemAtual) => {
+                {seguidores.slice(0,6).map((itemAtual) => {
                   return (
                     <li key={itemAtual.id}>
                       <a href={`https://github.com/${itemAtual.login}`} >
@@ -197,7 +197,7 @@ export default function Home() {
               </h2>
 
               <ul>
-                {comunidades.map((itemAtual) => {
+                {comunidades.slice(0,6).map((itemAtual) => {
                   return (
                     <li key={itemAtual.keyid}>
                       <a href={itemAtual.linkurl} key={itemAtual.keyid}>
