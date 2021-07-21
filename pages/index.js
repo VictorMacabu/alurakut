@@ -1,9 +1,10 @@
-import styled from 'styled-components'
+import React from 'react';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
-import React from 'react';
 
 function rand(min, max) { // randomiza a img da nova comunidade
   min = Math.ceil(min);   // min = 0
@@ -28,12 +29,11 @@ function ProfileSidebar(propriedades) {
   )
 }
 
-export default function Home() {
-  const usuarioAleatorio = 'VictorMacabu';
+export default function Home(props) {
+  const usuarioAleatorio = props.githubUser;
   const [comunidades, setComunidades] = React.useState([{
     // const comunidades = comunidades[0];
     // const alteradorDeComunidades/setComunidades = comunidades[1];
-
     //id: 454678465,
     //title: 'Eu odeio acordar cedo',
     //image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg',//gerador de img http://picsum.photos/300/300?7234324
@@ -125,20 +125,20 @@ export default function Home() {
                 image: `http://picsum.photos/300/300?${rand(0, 9999)}`,
                 linkurl: dadosDoForm.get('urlDestino'),
               }
-              fetch('/api/communities',{
+              fetch('/api/communities', {
                 method: 'POST',
-                headers:{
+                headers: {
                   'content-Type': 'application/json',
                 },
                 body: JSON.stringify(comunidade)
               })
-              .then(async (response) => {
-                const dados = await response.json();
-                console.log(dados);
-                const comunidade = dados.registroCriado;
-                const comunidadesAtualizadas = [...comunidades, comunidade];
-                setComunidades(comunidadesAtualizadas)
-              })
+                .then(async (response) => {
+                  const dados = await response.json();
+                  console.log(dados);
+                  const comunidade = dados.registroCriado;
+                  const comunidadesAtualizadas = [...comunidades, comunidade];
+                  setComunidades(comunidadesAtualizadas)
+                })
 
 
             }}>
@@ -175,7 +175,7 @@ export default function Home() {
               </h2>
 
               <ul style={{ maxHeight: '100%' }}>
-                {seguidores.slice(0,6).map((itemAtual) => {
+                {seguidores.slice(0, 6).map((itemAtual) => {
                   return (
                     <li key={itemAtual.id}>
                       <a href={`https://github.com/${itemAtual.login}`} >
@@ -197,7 +197,7 @@ export default function Home() {
               </h2>
 
               <ul>
-                {comunidades.slice(0,6).map((itemAtual) => {
+                {comunidades.slice(0, 6).map((itemAtual) => {
                   return (
                     <li key={itemAtual.keyid}>
                       <a href={itemAtual.linkurl} key={itemAtual.keyid}>
@@ -215,4 +215,30 @@ export default function Home() {
       </MainGrid>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+const cookies = nookies.get(context);
+const token = cookies.USER_TOKEN;
+const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth' , {
+  headers: {
+    Authorization: token
+  }
+})
+.then((resposta) => resposta.json())
+if(!isAuthenticated) {
+  return {
+    redirect: {
+      destination: '/login',
+      permanent: false,
+    }
+  }
+}
+
+const { githubUser } = jwt.decode(token);
+  return {
+    props: {
+      githubUser
+    },
+  }
 }
