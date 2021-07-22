@@ -9,6 +9,9 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
     max-height: 220px;
     list-style: none;
   }
+  a {
+    color: blue;
+  }
   img {
     object-fit: cover;
     background-position: center center;

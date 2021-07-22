@@ -47,7 +47,7 @@ export default function Home(props) {
       .then((respostaServidor) => {      /*chamando a API do github*/
         return respostaServidor.json(); /*github retorna uma promise*/
       })                                /*espera a resposta dessa promise*/
-      .then((respostaCompleta) => {     /*transforma a resposta num json*/
+      .then((respostaCompleta) => {     /*transforma a resposta em um json*/
         setSeguidores(respostaCompleta);/*espera o resultado da nova promise do json */
       })
 
@@ -80,9 +80,6 @@ export default function Home(props) {
         setComunidades(comunidadesDato)
       })
   }, [])
-
-
-
 
   console.log('seguidores: ' + seguidores)
   /* const pessoasFavoritas = [
@@ -218,27 +215,28 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(context) {
-const cookies = nookies.get(context);
-const token = cookies.USER_TOKEN;
-const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth' , {
-  headers: {
-    Authorization: token
-  }
-})
-.then((resposta) => resposta.json())
-if(!isAuthenticated) {
-  return {
-    redirect: {
-      destination: '/login',
-      permanent: false,
+  const cookies = nookies.get(context)
+  const token = cookies.USER_TOKEN;
+  const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth', {
+    headers: {
+      Authorization: token
+    }
+  })
+    .then((resposta) => resposta.json())
+
+  if (!isAuthenticated) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
     }
   }
-}
-
-const { githubUser } = jwt.decode(token);
+ 
+  const { githubUser } = jwt.decode(token);
   return {
     props: {
       githubUser
-    },
+    }, // will be passed to the page component as props
   }
 }
